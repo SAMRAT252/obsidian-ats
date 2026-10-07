@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Job Description - ATS System{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+{% set active_page = 'job_description' %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2>Job Description</h2>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
+            <!-- Left Form -->
+            <div class="card">
+                <h3 class="mb-3">Add New Target Job</h3>
+                <form action="{{ url_for('job_description') }}" method="POST">
+                    <div class="form-group">
+                        <label for="title" class="form-label">Job Title</label>
+                        <input type="text" id="title" name="title" class="form-input" required placeholder="e.g., Senior Software Engineer">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company" class="form-label">Company (Optional)</label>
+                        <input type="text" id="company" name="company" class="form-input" placeholder="e.g., Google">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience_required" class="form-label">Experience Required (Optional)</label>
+                        <input type="text" id="experience_required" name="experience_required" class="form-input" placeholder="e.g., 3-5 years">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="form-label">Job Description</label>
+                        <textarea id="description" name="description" class="form-textarea" required placeholder="Paste the full job description here..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100" style="width: 100%;">
+                        <i class="fa-solid fa-save"></i> Save Job Description
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Saved JDs -->
+            <div class="card">
+                <h3 class="mb-3">Saved Job Descriptions</h3>
+                <div class="item-list jd-list">
+                    {% if job_descriptions %}
+                        {% for jd in job_descriptions %}
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">{{ jd.title }}</div>
+                                    <div class="list-item-meta">
+                                        {% if jd.company %}
+                                            <span><i class="fa-regular fa-building"></i> {{ jd.company }}</span>
+                                        {% endif %}
+                                        <span>Added: {{ jd.created_at }}</span>
+                                    </div>
+                                </div>
+                                <div class="list-item-actions">
+                                    <form action="{{ url_for('analyze') }}" method="POST" style="display:inline;">
+                                        <input type="hidden" name="job_description_id" value="{{ jd.id }}">
+                                        <button type="submit" class="btn btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;">Analyze</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-secondary text-center py-4">No saved job descriptions yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

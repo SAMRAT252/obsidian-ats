@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+{% set active_page = 'profile' %}
+
+{% block title %}Profile & Career Identity — Obsidian AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <!-- Main Workspace Content -->
+    <main class="main-content">
+        <div class="profile-workspace">
+            
+            <!-- Page Header -->
+            <div class="profile-header-banner">
+                <div class="profile-kicker">
+                    <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
+                    <span>Account & Career Identity</span>
+                </div>
+                <h1 class="profile-title">PROFILE</h1>
+                <p class="profile-subtitle">
+                    Manage your identity, security credentials, and career intelligence preferences.
+                </p>
+            </div>
+
+            <!-- Career Profile Identity Hero Card -->
+            <div class="profile-hero-card">
+                <div class="profile-hero-left">
+                    <div class="avatar-large">
+                        {{ user.full_name[:1] if user.full_name else (user.username[:1] if user.username else 'U') | upper }}
+                    </div>
+                    <div class="profile-identity-details">
+                        <div class="profile-identity-name">
+                            {{ user.full_name if user.full_name else user.username }}
+                        </div>
+                        <div class="profile-identity-tag">
+                            <span>@{{ user.username }}</span>
+                            <span style="color: var(--text-muted);">•</span>
+                            <span class="identity-badge">CSE • AI/ML</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-hero-quickstats">
+                    <div class="hero-stat-item">
+                        <span class="hero-stat-val">{{ stats.analyses_count | default(0) }}</span>
+                        <span class="hero-stat-label">Analyses Run</span>
+                    </div>
+                    <div class="hero-stat-item">
+                        <span class="hero-stat-val">{{ stats.average_score | default(0) }}%</span>
+                        <span class="hero-stat-label">Avg ATS Match</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two-Column Form & Details Layout -->
+            <form method="POST" action="{{ url_for('profile') }}" id="profileForm" class="profile-form">
+                <div class="profile-grid-layout">
+                    
+                    <!-- Left Column: Personal Information & Security -->
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        
+                        <!-- Personal Information Card -->
+                        <div class="settings-card">
+                            <div class="card-header-group">
+                                <div class="card-heading">
+                                    <i data-lucide="user-check"></i>
+                                    <span>Personal Information</span>
+                                </div>
+                                <p class="card-subheading">Update your name and primary email address.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" id="username" value="{{ user.username }}" class="form-control" disabled>
+                                <small class="text-muted" style="font-size: 0.75rem; margin-top: 0.35rem;">User handle is unique and immutable.</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="full_name" class="form-label">Full Name</label>
+                                <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" class="form-control" placeholder="Enter your full name" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" placeholder="your.email@domain.com" required>
+                            </div>
+                        </div>
+
+                        <!-- Security Card -->
+                        <div class="settings-card">
+                            <div class="card-header-group">
+                                <div class="card-heading">
+                                    <i data-lucide="lock"></i>
+                                    <span>Security Credentials</span>
+                                </div>
+                                <p class="card-subheading">Keep your Career Intelligence account protected with salted encryption.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="current_password" class="form-label">Current Password</label>
+                                <div class="input-with-action">
+                                    <input type="password" id="current_password" name="current_password" class="form-control" placeholder="Enter existing password">
+                                    <button type="button" class="field-action-btn" data-toggle="current_password" title="Toggle visibility">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="new_password" class="form-label">New Password</label>
+                                <div class="input-with-action">
+                                    <input type="password" id="new_password" name="new_password" class="form-control" placeholder="Enter new strong password">
+                                    <button type="button" class="field-action-btn" data-toggle="new_password" title="Toggle visibility">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Live Password Strength Meter -->
+                            <div class="strength-meter-wrap" id="strengthWrap" style="display: none;">
+                                <div class="strength-bar-track">
+                                    <div class="strength-segment" id="str1"></div>
+                                    <div class="strength-segment" id="str2"></div>
+                                    <div class="strength-segment" id="str3"></div>
+                                </div>
+                                <div class="strength-meta">
+                                    <span>PASSWORD STRENGTH</span>
+                                    <span class="strength-tag" id="strengthLabel">WEAK</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: Career Intelligence Summary & Account Details -->
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        
+                        <!-- Profile Summary & Metrics -->
+                        <div class="settings-card">
+                            <div class="card-header-group">
+                                <div class="card-heading">
+                                    <i data-lucide="sparkles"></i>
+                                    <span>Intelligence Summary</span>
+                                </div>
+                                <p class="card-subheading">Overview of your activity and resume readiness.</p>
+                            </div>
+
+                            <div class="metrics-stack">
+                                <div class="metric-pill">
+                                    <span class="metric-pill-val lime-glow">{{ stats.resumes_count | default(0) }}</span>
+                                    <span class="metric-pill-title">Resumes Analyzed</span>
+                                </div>
+                                <div class="metric-pill">
+                                    <span class="metric-pill-val lime-glow">{{ stats.average_score | default(0) }}%</span>
+                                    <span class="metric-pill-title">Avg ATS Score</span>
+                                </div>
+                                <div class="metric-pill">
+                                    <span class="metric-pill-val">{{ stats.job_descriptions_count | default(0) }}</span>
+                                    <span class="metric-pill-title">Jobs Matched</span>
+                                </div>
+                                <div class="metric-pill">
+                                    <span class="metric-pill-val">{{ stats.skills_improved | default(4) }}</span>
+                                    <span class="metric-pill-title">Skills Improved</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Meta Card -->
+                        <div class="settings-card">
+                            <div class="card-header-group">
+                                <div class="card-heading">
+                                    <i data-lucide="history"></i>
+                                    <span>Account Telemetry</span>
+                                </div>
+                                <p class="card-subheading">Session and persistence metadata.</p>
+                            </div>
+
+                            <div class="account-meta-list">
+                                <div class="meta-row">
+                                    <span class="meta-row-label">Account Created</span>
+                                    <span class="meta-row-val">{{ (user.created_at|string)[:10] if user.created_at else 'Active' }}</span>
+                                </div>
+                                <div class="meta-row">
+                                    <span class="meta-row-label">Last Screening</span>
+                                    <span class="meta-row-val">{{ stats.last_analysis_date | default('Recent') }}</span>
+                                </div>
+                                <div class="meta-row">
+                                    <span class="meta-row-label">Role Classification</span>
+                                    <span class="meta-row-val text-lime">AI / ML Engineer</span>
+                                </div>
+                                <div class="meta-row">
+                                    <span class="meta-row-label">Storage Encryption</span>
+                                    <span class="meta-row-val">PBKDF2-SHA256</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Save Changes Button Footer -->
+                <div class="form-submit-footer">
+                    <span class="save-status-hint">All changes are immediately synced to your session.</span>
+                    <button type="submit" class="btn btn-lime">
+                        <span>SAVE CHANGES</span>
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Password visibility toggles
+    document.querySelectorAll('.field-action-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-toggle');
+            const input = document.getElementById(targetId);
+            if (!input) return;
+            
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            
+            // Re-render Lucide icon
+            btn.innerHTML = isPassword ? '<i data-lucide="eye-off"></i>' : '<i data-lucide="eye"></i>';
+            if (window.lucide) lucide.createIcons();
+        });
+    });
+
+    // Interactive Password Strength Meter
+    const newPassInput = document.getElementById('new_password');
+    const strengthWrap = document.getElementById('strengthWrap');
+    const str1 = document.getElementById('str1');
+    const str2 = document.getElementById('str2');
+    const str3 = document.getElementById('str3');
+    const label = document.getElementById('strengthLabel');
+
+    if (newPassInput) {
+        newPassInput.addEventListener('input', () => {
+            const val = newPassInput.value;
+            if (!val) {
+                strengthWrap.style.display = 'none';
+                return;
+            }
+            strengthWrap.style.display = 'flex';
+
+            let score = 0;
+            if (val.length >= 6) score++;
+            if (val.length >= 10 && /[0-9]/.test(val)) score++;
+            if (val.length >= 12 && /[^A-Za-z0-9]/.test(val)) score++;
+
+            // Reset bars
+            str1.style.backgroundColor = 'var(--bg-surface-elevated)';
+            str2.style.backgroundColor = 'var(--bg-surface-elevated)';
+            str3.style.backgroundColor = 'var(--bg-surface-elevated)';
+
+            if (score <= 1) {
+                str1.style.backgroundColor = 'var(--status-danger)';
+                label.textContent = 'WEAK';
+                label.style.color = 'var(--status-danger)';
+            } else if (score === 2) {
+                str1.style.backgroundColor = 'var(--status-warning)';
+                str2.style.backgroundColor = 'var(--status-warning)';
+                label.textContent = 'MEDIUM';
+                label.style.color = 'var(--status-warning)';
+            } else {
+                str1.style.backgroundColor = 'var(--accent-lime)';
+                str2.style.backgroundColor = 'var(--accent-lime)';
+                str3.style.backgroundColor = 'var(--accent-lime)';
+                label.textContent = 'STRONG';
+                label.style.color = 'var(--accent-lime)';
+            }
+        });
+    }
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+});
+</script>
+{% endblock %}

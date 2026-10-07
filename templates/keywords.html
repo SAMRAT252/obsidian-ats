@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Keywords{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+{% endblock %}
+
+{% set active_page = 'keywords' %}
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <main class="main-content">
+        <div class="keywords-container">
+            <h1>Keyword Analysis</h1>
+            
+            <div class="chart-container">
+                <canvas id="keywordChart"></canvas>
+            </div>
+            
+            <div class="keywords-split">
+                <div class="keyword-section">
+                    <h3><i class="fas fa-check-circle text-success"></i> Matched Keywords</h3>
+                    <div class="chip-container">
+                        {% for kw in analysis.matched_keywords %}
+                            <span class="chip matched">{{ kw }}</span>
+                        {% else %}
+                            <p>No matched keywords.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="keyword-section">
+                    <h3><i class="fas fa-times-circle text-danger"></i> Missing Keywords</h3>
+                    <div class="chip-container">
+                        {% for kw in analysis.missing_keywords %}
+                            <span class="chip missing">{{ kw }}</span>
+                        {% else %}
+                            <p>No missing keywords.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    window.matchedKeywordsCount = {{ analysis.matched_keywords|length }};
+    window.missingKeywordsCount = {{ analysis.missing_keywords|length }};
+</script>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Compare{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+{% endblock %}
+
+{% set active_page = 'compare' %}
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <main class="main-content">
+        <div class="compare-container">
+            <h1>Compare Analyses</h1>
+            
+            <form method="POST" action="{{ url_for('compare') }}" class="compare-form">
+                <select name="analysis_id_1" class="form-control">
+                    <option value="">Select Analysis 1...</option>
+                    {% for a in analyses %}
+                        <option value="{{ a.id }}" {% if analysis1 and analysis1.id == a.id %}selected{% endif %}>
+                            Resume: {{ a.resume_id }} | Score: {{ a.ats_score }} | Date: {{ a.created_at }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <select name="analysis_id_2" class="form-control">
+                    <option value="">Select Analysis 2...</option>
+                    {% for a in analyses %}
+                        <option value="{{ a.id }}" {% if analysis2 and analysis2.id == a.id %}selected{% endif %}>
+                            Resume: {{ a.resume_id }} | Score: {{ a.ats_score }} | Date: {{ a.created_at }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit" class="btn btn-primary mt-2">Compare</button>
+            </form>
+            
+            {% if analysis1 and analysis2 %}
+            <div class="comparison-results mt-4">
+                <div class="chart-container">
+                    <canvas id="compareChart"></canvas>
+                </div>
+                
+                <div class="comparison-cards">
+                    <div class="compare-card">
+                        <h3>Analysis 1</h3>
+                        <p><strong>Score:</strong> {{ analysis1.ats_score }}</p>
+                        <p><strong>Keyword Match:</strong> {{ analysis1.score_breakdown.keyword_match }}</p>
+                        <p><strong>Skills Match:</strong> {{ analysis1.score_breakdown.skills_match }}</p>
+                    </div>
+                    <div class="compare-card">
+                        <h3>Analysis 2</h3>
+                        <p><strong>Score:</strong> {{ analysis2.ats_score }}</p>
+                        <p><strong>Keyword Match:</strong> {{ analysis2.score_breakdown.keyword_match }}</p>
+                        <p><strong>Skills Match:</strong> {{ analysis2.score_breakdown.skills_match }}</p>
+                    </div>
+                </div>
+            </div>
+            <script>
+                window.compareData1 = {{ analysis1.score_breakdown | tojson | safe }};
+                window.compareData2 = {{ analysis2.score_breakdown | tojson | safe }};
+            </script>
+            {% endif %}
+        </div>
+    </main>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

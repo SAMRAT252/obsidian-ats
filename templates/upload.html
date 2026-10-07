@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Resume - ATS System{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+{% set active_page = 'upload' %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2>Upload Resume</h2>
+        </div>
+
+        <div class="card mb-4">
+            <form action="{{ url_for('upload_resume') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <div class="upload-zone" id="dropZone">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <h3>Drag & Drop your resume here</h3>
+                    <p class="text-secondary mt-1 mb-2">or click to browse</p>
+                    <div>
+                        <span class="badge badge-info">PDF</span>
+                        <span class="badge badge-info">DOCX</span>
+                    </div>
+                    <input type="file" name="resume" id="resumeFile" accept=".pdf,.docx" required>
+                </div>
+
+                <div class="file-info" id="fileInfo">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-file-lines" style="font-size: 1.5rem; color: var(--primary);"></i>
+                            <div>
+                                <div id="fileName" style="font-weight: 600;">filename.pdf</div>
+                                <div id="fileSize" class="text-secondary" style="font-size: 0.85rem;">2.4 MB</div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger" id="removeFile" style="padding: 0.3rem 0.6rem;"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-3" style="text-align: left; max-width: 520px; margin-left: auto; margin-right: auto;">
+                    <label for="targetJob" class="form-label" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span><i class="fa-solid fa-crosshairs text-lime" style="margin-right: 6px;"></i> Target Role for ATS Match</span>
+                        <a href="{{ url_for('job_description') }}" style="color: var(--accent-lime); font-size: 0.8rem; text-transform: none;"><i class="fa-solid fa-plus"></i> Custom Job</a>
+                    </label>
+                    <select name="job_description_id" id="targetJob" class="form-input" style="width: 100%; background-color: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-medium); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.95rem;">
+                        {% if job_descriptions %}
+                            {% for jd in job_descriptions %}
+                                <option value="{{ jd.id }}">{{ jd.title }} {% if jd.company %}&bull; {{ jd.company }}{% endif %}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option value="">Standard Technical Role (Auto-Benchmark)</option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary" id="uploadBtn" disabled style="padding: 0.85rem 2.25rem; font-size: 1rem; font-weight: 700; border-radius: 10px;">
+                        <i class="fa-solid fa-bolt"></i> Upload & Run ATS Analysis
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 class="mb-3">Previously Uploaded Resumes</h3>
+            <div class="item-list resume-list">
+                {% if resumes %}
+                    {% for resume in resumes %}
+                        <div class="list-item">
+                            <div class="list-item-main">
+                                <div class="list-item-title">{{ resume.original_filename }}</div>
+                                <div class="list-item-meta">
+                                    <span class="badge badge-info">{{ resume.file_type }}</span>
+                                    <span>Uploaded: {{ resume.uploaded_at }}</span>
+                                </div>
+                            </div>
+                            <div class="list-item-actions" style="display: flex; gap: 0.6rem; align-items: center;">
+                                <form action="{{ url_for('analyze') }}" method="POST" style="display:inline;">
+                                    <input type="hidden" name="resume_id" value="{{ resume.id }}">
+                                    <button type="submit" class="btn btn-primary" style="padding: 0.45rem 1rem; font-size: 0.85rem; font-weight: 700;" title="Run ATS Analysis">
+                                        <i class="fa-solid fa-bolt"></i> Analyze
+                                    </button>
+                                </form>
+                                <form action="{{ url_for('delete_resume', resume_id=resume.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this resume?');">
+                                    <button type="submit" class="btn btn-danger" style="padding: 0.45rem 0.85rem;" title="Delete Resume"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-secondary text-center py-3">No resumes uploaded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

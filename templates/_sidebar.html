@@ -1,0 +1,81 @@
+{% set active_page = active_page | default('') %}
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-brand">
+            <div class="brand-badge">
+                <i data-lucide="cpu" class="brand-icon"></i>
+            </div>
+            <div class="brand-text">
+                <span class="brand-title">OBSIDIAN AI</span>
+                <span class="brand-subtitle">CAREER INTELLIGENCE</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <!-- OVERVIEW SECTION -->
+        <div class="nav-section-label">OVERVIEW</div>
+        <a href="{{ url_for('dashboard') }}" class="sidebar-link {% if active_page == 'dashboard' %}active{% endif %}">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <!-- WORKSPACE SECTION -->
+        <div class="nav-section-label">WORKSPACE</div>
+        <a href="{{ url_for('upload_resume') }}" class="sidebar-link {% if active_page == 'upload' %}active{% endif %}">
+            <i data-lucide="file-text"></i>
+            <span>Resume</span>
+        </a>
+        <a href="{{ url_for('job_description') }}" class="sidebar-link {% if active_page == 'job_description' %}active{% endif %}">
+            <i data-lucide="briefcase-business"></i>
+            <span>Job Match</span>
+        </a>
+        <a href="{{ url_for('compare') }}" class="sidebar-link {% if active_page == 'compare' %}active{% endif %}">
+            <i data-lucide="git-compare"></i>
+            <span>Compare</span>
+        </a>
+
+        <!-- INSIGHTS SECTION -->
+        <div class="nav-section-label">INSIGHTS</div>
+        {% if latest_analysis_id %}
+        <a href="{{ url_for('ats_score', analysis_id=latest_analysis_id) }}" class="sidebar-link {% if active_page == 'ats_score' %}active{% endif %}">
+            <i data-lucide="gauge"></i>
+            <span>ATS Score</span>
+        </a>
+        <a href="{{ url_for('keywords', analysis_id=latest_analysis_id) }}" class="sidebar-link {% if active_page == 'keywords' %}active{% endif %}">
+            <i data-lucide="tags"></i>
+            <span>Keywords</span>
+        </a>
+        <a href="{{ url_for('skill_gap', analysis_id=latest_analysis_id) }}" class="sidebar-link {% if active_page == 'skill_gap' %}active{% endif %}">
+            <i data-lucide="trending-up"></i>
+            <span>Skill Gap</span>
+        </a>
+        {% endif %}
+        <a href="{{ url_for('history') }}" class="sidebar-link {% if active_page == 'history' %}active{% endif %}">
+            <i data-lucide="history"></i>
+            <span>History</span>
+        </a>
+
+        <!-- ACCOUNT SECTION -->
+        <div class="nav-section-label">ACCOUNT</div>
+        <a href="{{ url_for('profile') }}" class="sidebar-link {% if active_page == 'profile' %}active{% endif %}">
+            <i data-lucide="user-round"></i>
+            <span>Profile & Settings</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar-mini">
+                {{ session.get('full_name', session.get('username', 'U'))[:1] | upper }}
+            </div>
+            <div class="user-info-mini">
+                <span class="user-name-mini">{{ session.get('full_name', session.get('username')) }}</span>
+                <span class="user-role-mini">CSE • AI/ML</span>
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-link-mini" title="Sign Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+    </div>
+</aside>

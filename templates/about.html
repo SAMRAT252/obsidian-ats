@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block extra_css %}
+<style>
+.public-page { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+.content-wrapper h1 { color: #1e293b; margin-bottom: 20px; }
+.content-wrapper h2 { color: #6366f1; margin-top: 30px; margin-bottom: 15px; }
+.content-wrapper p { font-size: 1.1rem; line-height: 1.6; color: #475569; }
+.content-wrapper pre { background: #1e293b; color: #f1f5f9; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: monospace; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="public-page container">
+    <div class="content-wrapper mt-5">
+        <h1>About ATS System</h1>
+        
+        <section class="mt-4">
+            <h2>The Problem</h2>
+            <p>Modern recruitment heavily relies on Applicant Tracking Systems (ATS) that often filter out qualified candidates simply because their resumes aren't perfectly formatted or lack specific keywords.</p>
+        </section>
+        
+        <section class="mt-4">
+            <h2>Our Solution</h2>
+            <p>We provide a premium AI-powered tool to analyze your resume against job descriptions, using advanced NLP and vector similarity to give you actionable insights.</p>
+        </section>
+        
+        <section class="mt-4">
+            <h2>How It Works</h2>
+            <p>Our system parses your PDF/DOCX resume, extracts text, tokenizes it, and calculates semantic similarity against the job description using TF-IDF and keyword matching.</p>
+        </section>
+        
+        <section class="mt-4">
+            <h2>Architecture Overview</h2>
+            <pre>
+User Upload -> Resume Parsing (PyPDF2/python-docx) 
+-> Text Processing (NLTK) 
+-> Skill Extraction 
+-> Vectorization (TF-IDF) 
+-> ATS Score Calculation
+-> Recommendation Engine
+            </pre>
+        </section>
+        
+        <section class="mt-4">
+            <h2>Future Scope</h2>
+            <p>In the future, we plan to add generative AI suggestions for rewriting specific bullet points to maximize ATS compatibility.</p>
+        </section>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

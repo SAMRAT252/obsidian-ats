@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}ATS Score{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+{% endblock %}
+
+{% set active_page = 'ats_score' %}
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <main class="main-content">
+        <div class="ats-score-container">
+            <h1>ATS Score Breakdown</h1>
+            <div class="score-overview">
+                <div class="score-circle-container">
+                    <svg class="score-circle" viewBox="0 0 100 100">
+                        <circle class="score-circle-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="score-circle-path" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="score-text">
+                        <span class="score-value" id="final-score" data-score="{{ analysis.ats_score }}">0</span>%
+                    </div>
+                </div>
+                <div class="score-category">
+                    <span class="badge" id="score-badge">{{ analysis.category }}</span>
+                </div>
+            </div>
+            
+            <div class="score-bars">
+                <h3>Component Scores</h3>
+                {% set breakdown = analysis.score_breakdown %}
+                <div class="bar-group">
+                    <label>Keyword Match</label>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" data-width="{{ breakdown.keyword_match }}"></div></div>
+                    <span>{{ breakdown.keyword_match|round(1) }}%</span>
+                </div>
+                <div class="bar-group">
+                    <label>Skills Match</label>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" data-width="{{ breakdown.skills_match }}"></div></div>
+                    <span>{{ breakdown.skills_match|round(1) }}%</span>
+                </div>
+                <div class="bar-group">
+                    <label>Semantic Similarity</label>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" data-width="{{ breakdown.semantic_similarity }}"></div></div>
+                    <span>{{ breakdown.semantic_similarity|round(1) }}%</span>
+                </div>
+                <div class="bar-group">
+                    <label>Experience</label>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" data-width="{{ breakdown.experience }}"></div></div>
+                    <span>{{ breakdown.experience|round(1) }}%</span>
+                </div>
+                <div class="bar-group">
+                    <label>Education</label>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" data-width="{{ breakdown.education }}"></div></div>
+                    <span>{{ breakdown.education|round(1) }}%</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

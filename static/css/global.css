@@ -1,0 +1,610 @@
+/* global.css - OBSIDIAN AI Career Intelligence Theme */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Obsidian AI Color System - NO BLUE / NO PURPLE */
+    --bg-base: #0B0D0C;          /* Deep near-black background */
+    --bg-surface: #121513;       /* Elevated dark charcoal surface */
+    --bg-surface-elevated: #181C19; /* Secondary card / container */
+    --bg-input: #151815;         /* Form inputs & interactive widgets */
+    
+    --text-primary: #F4F1E8;     /* Warm ivory (high contrast) */
+    --text-secondary: #A8ADA5;   /* Soft warm gray */
+    --text-muted: #6F756F;       /* Low-emphasis muted text */
+    
+    --accent-lime: #C8FF3D;      /* Electric lime signature brand color */
+    --accent-lime-hover: #b5ee2e;/* Slightly darker lime for active hover */
+    --accent-lime-subtle: rgba(200, 255, 61, 0.08); /* Glow / background subtle */
+    --accent-lime-border: rgba(200, 255, 61, 0.35); /* Focus & highlight borders */
+
+    --border-subtle: rgba(244, 241, 232, 0.08); /* Minimal borders */
+    --border-medium: rgba(244, 241, 232, 0.14); /* Card & input borders */
+    
+    --status-success: #C8FF3D;   /* Lime is positive match */
+    --status-warning: #EAB308;   /* Amber warning */
+    --status-danger: #F87171;    /* Coral red alert */
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-full: 9999px;
+
+    --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-obsidian: 0 10px 30px -10px rgba(0, 0, 0, 0.65);
+    --shadow-glow: 0 0 25px rgba(200, 255, 61, 0.15);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+p {
+    color: var(--text-secondary);
+}
+
+a {
+    color: var(--accent-lime);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+/* Base Layout Containers */
+.container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--bg-base);
+}
+
+/* ========================================================
+   OBSIDIAN AI SIDEBAR DESIGN
+   ======================================================== */
+.sidebar {
+    width: 270px;
+    background-color: var(--bg-base);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 1.75rem 1.25rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    z-index: 900;
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.brand-badge {
+    width: 38px;
+    height: 38px;
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--accent-lime-border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-lime);
+    box-shadow: 0 0 15px rgba(200, 255, 61, 0.12);
+}
+
+.brand-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+}
+
+.brand-subtitle {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--accent-lime);
+    text-transform: uppercase;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.nav-section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding: 1.25rem 0.75rem 0.4rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 0.85rem;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.sidebar-link i, 
+.sidebar-link svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8px;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+}
+
+.sidebar-link:hover {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+.sidebar-link:hover i,
+.sidebar-link:hover svg {
+    color: var(--text-primary);
+}
+
+/* Active navigation state: thin lime vertical indicator + dark elevated bg + ivory text */
+.sidebar-link.active {
+    background-color: var(--bg-surface-elevated);
+    color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px var(--border-subtle);
+}
+
+.sidebar-link.active::before {
+    content: '';
+    position: absolute;
+    left: -1.25rem;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--accent-lime);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 12px var(--accent-lime);
+}
+
+.sidebar-link.active i,
+.sidebar-link.active svg {
+    color: var(--accent-lime);
+}
+
+.sidebar-footer {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--bg-surface);
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+}
+
+.user-avatar-mini {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--bg-surface-elevated);
+    border: 1.5px solid var(--accent-lime);
+    color: var(--accent-lime);
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-info-mini {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.user-name-mini {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-role-mini {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.logout-link-mini {
+    color: var(--text-muted);
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-link-mini:hover {
+    color: var(--status-danger);
+}
+
+.logout-link-mini svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ========================================================
+   MAIN CONTENT WRAPPER
+   ======================================================== */
+.main-content {
+    flex: 1;
+    padding: 2.5rem 3.5rem;
+    background-color: var(--bg-base);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* ========================================================
+   OBSIDIAN FORM & BUTTON CONTROLS
+   ======================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: none;
+    letter-spacing: 0.02em;
+    font-family: inherit;
+}
+
+/* Signature Electric Lime Button */
+.btn-primary, 
+.btn-lime {
+    background-color: var(--accent-lime);
+    color: #0B0D0C;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(200, 255, 61, 0.15);
+}
+
+.btn-primary:hover,
+.btn-lime:hover {
+    background-color: var(--accent-lime-hover);
+    color: #0B0D0C;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(200, 255, 61, 0.3);
+}
+
+.btn-primary:hover svg,
+.btn-lime:hover svg {
+    transform: translateX(4px);
+}
+
+.btn-secondary {
+    background-color: var(--bg-surface-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-medium);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-surface);
+    border-color: rgba(244, 241, 232, 0.3);
+    color: #ffffff;
+}
+
+.btn-danger {
+    background-color: rgba(248, 113, 113, 0.15);
+    color: var(--status-danger);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.btn-danger:hover {
+    background-color: var(--status-danger);
+    color: #0B0D0C;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-medium);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent-lime);
+    color: var(--accent-lime);
+}
+
+/* Obsidian Input Fields */
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.form-input, 
+.form-textarea,
+.form-control {
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+    box-sizing: border-box;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder,
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-input:focus, 
+.form-textarea:focus,
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-lime);
+    box-shadow: 0 0 0 3px rgba(200, 255, 61, 0.12);
+    background-color: #181c18;
+}
+
+.form-input:disabled,
+.form-control:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: rgba(21, 24, 21, 0.4);
+    border-color: var(--border-subtle);
+    color: var(--text-muted);
+}
+
+/* ========================================================
+   OBSIDIAN TOP NAVBAR (PUBLIC PAGES)
+   ======================================================== */
+.navbar {
+    background-color: rgba(11, 13, 12, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-primary);
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+}
+
+.nav-brand span {
+    color: var(--accent-lime);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    color: var(--text-primary);
+}
+
+/* ========================================================
+   FLASH MESSAGES & NOTIFICATIONS
+   ======================================================== */
+.flash-messages {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.flash {
+    padding: 0.95rem 1.4rem;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-medium);
+    box-shadow: var(--shadow-obsidian);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-width: 320px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flash.success { border-left: 4px solid var(--accent-lime); }
+.flash.danger, .flash.error { border-left: 4px solid var(--status-danger); }
+.flash.warning { border-left: 4px solid var(--status-warning); }
+.flash.info { border-left: 4px solid var(--text-secondary); }
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.badge-lime,
+.badge-success {
+    background-color: var(--accent-lime-subtle);
+    color: var(--accent-lime);
+    border: 1px solid var(--accent-lime-border);
+}
+
+.badge-warning {
+    background-color: rgba(234, 179, 8, 0.12);
+    color: var(--status-warning);
+    border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+.badge-danger {
+    background-color: rgba(248, 113, 113, 0.12);
+    color: var(--status-danger);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.badge-info {
+    background-color: rgba(244, 241, 232, 0.08);
+    color: var(--text-primary);
+    border: 1px solid var(--border-medium);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Utility Helpers */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+.text-lime { color: var(--accent-lime); }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+    .main-content {
+        padding: 2rem 1.5rem;
+    }
+}

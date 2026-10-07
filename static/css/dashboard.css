@@ -1,0 +1,269 @@
+/* dashboard.css - OBSIDIAN AI Career Intelligence Layout */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--bg-base);
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-header h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+/* Stats KPI Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background-color: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-medium);
+    box-shadow: var(--shadow-obsidian);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.stat-card:hover {
+    border-color: rgba(244, 241, 232, 0.22);
+    transform: translateY(-2px);
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border-subtle);
+}
+
+.stat-card:nth-child(1)::after { background: var(--accent-lime); box-shadow: 0 0 10px var(--accent-lime); }
+.stat-card:nth-child(2)::after { background: var(--text-primary); }
+.stat-card:nth-child(3)::after { background: var(--text-secondary); }
+.stat-card:nth-child(4)::after { background: var(--accent-lime); }
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.stat-header svg,
+.stat-header i {
+    color: var(--accent-lime);
+    width: 16px;
+    height: 16px;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-feature-settings: "tnum";
+    letter-spacing: -0.03em;
+}
+
+/* Charts Grid */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.chart-container {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-obsidian);
+    height: 310px;
+    max-height: 310px;
+    min-height: 310px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 240px;
+    max-height: 240px;
+    min-height: 240px;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+.chart-wrapper canvas {
+    display: block !important;
+    width: 100% !important;
+    height: 240px !important;
+    max-height: 240px !important;
+}
+
+.chart-container h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Cards & Generic Panels */
+.card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-obsidian);
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+/* Items List (Recent analyses / uploaded resumes) */
+.item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.4rem;
+    transition: var(--transition-smooth);
+}
+
+.list-item:hover {
+    border-color: var(--accent-lime-border);
+    background-color: #1a1f1b;
+}
+
+.list-item-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.list-item-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.list-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Upload Dropzone Workspace */
+.upload-zone {
+    border: 1.5px dashed var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 4.5rem 2rem;
+    text-align: center;
+    background-color: var(--bg-surface);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.upload-zone:hover,
+.upload-zone.drag-over {
+    border-color: var(--accent-lime);
+    background-color: rgba(200, 255, 61, 0.03);
+}
+
+.upload-icon {
+    font-size: 2.75rem;
+    color: var(--accent-lime);
+    margin-bottom: 1rem;
+}
+
+.upload-zone h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.upload-zone input[type="file"] {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-info {
+    display: none;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.progress-bar {
+    height: 6px;
+    background-color: var(--bg-base);
+    border-radius: 3px;
+    margin-top: 0.75rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent-lime);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+@media (max-width: 900px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}

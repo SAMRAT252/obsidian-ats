@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Skill Gap{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+{% endblock %}
+
+{% set active_page = 'skill_gap' %}
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <main class="main-content">
+        <div class="skill-gap-container">
+            <h1>Skill Gap Analysis</h1>
+            
+            <div class="skills-split">
+                <div class="skill-column">
+                    <h3>Strong Skills</h3>
+                    {% for skill in analysis.skill_gap_analysis.strong_skills %}
+                        <div class="skill-card strong"><i class="fas fa-check"></i> {{ skill }}</div>
+                    {% endfor %}
+                </div>
+                <div class="skill-column">
+                    <h3>Moderate Skills</h3>
+                    {% for skill in analysis.skill_gap_analysis.moderate_skills %}
+                        <div class="skill-card moderate"><i class="fas fa-minus"></i> {{ skill }}</div>
+                    {% endfor %}
+                </div>
+                <div class="skill-column">
+                    <h3>Missing Skills</h3>
+                    {% for skill in analysis.skill_gap_analysis.missing_skills %}
+                        <div class="skill-card missing"><i class="fas fa-times"></i> {{ skill }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="learning-recommendations mt-4">
+                <h3>Learning Recommendations</h3>
+                <ul>
+                {% for rec in analysis.skill_gap_analysis.recommendations %}
+                    <li>{{ rec }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

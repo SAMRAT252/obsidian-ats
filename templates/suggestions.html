@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Suggestions{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+{% endblock %}
+
+{% set active_page = 'ats_score' %}
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <main class="main-content">
+        <div class="suggestions-container">
+            <h1>Actionable Suggestions</h1>
+            <div class="suggestion-list">
+                {% for suggestion in analysis.recommendations %}
+                    <div class="suggestion-card {{ suggestion.category }}">
+                        <div class="suggestion-icon">
+                            {% if suggestion.category == 'critical' %}<i class="fas fa-exclamation-triangle"></i>
+                            {% elif suggestion.category == 'important' %}<i class="fas fa-info-circle"></i>
+                            {% else %}<i class="fas fa-lightbulb"></i>{% endif %}
+                        </div>
+                        <div class="suggestion-content">
+                            <h4>{{ suggestion.title }}</h4>
+                            <p>{{ suggestion.description }}</p>
+                            <small>Section: {{ suggestion.section }}</small>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Great job! We have no strong suggestions right now.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

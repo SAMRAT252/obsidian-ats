@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Help & FAQ{% endblock %}
+{% block extra_css %}
+<style>
+.public-page { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+.content-wrapper h1 { color: #1e293b; margin-bottom: 30px; }
+.accordion-item { border-bottom: 1px solid #e2e8f0; padding: 20px 0; }
+.accordion-item h3 { color: #1e293b; margin-bottom: 10px; font-size: 1.25rem; }
+.accordion-item p { color: #475569; line-height: 1.6; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="public-page container">
+    <div class="content-wrapper mt-5">
+        <h1>Help & FAQ</h1>
+        
+        <div class="accordion mt-4">
+            <div class="accordion-item">
+                <h3>What files are supported?</h3>
+                <p>We currently support uploading resumes in PDF (.pdf) and Word (.docx) formats. The maximum file size is 16MB.</p>
+            </div>
+            <div class="accordion-item">
+                <h3>How is the ATS Score calculated?</h3>
+                <p>The score is a weighted combination of Keyword Match (30%), Skills Match (25%), Semantic Similarity (20%), Experience (15%), Education (5%), and Structure (5%). A score of 90+ is considered Excellent.</p>
+            </div>
+            <div class="accordion-item">
+                <h3>Why are some keywords flagged as missing?</h3>
+                <p>Our NLP engine extracts key technical and soft skills from the job description. If they don't exactly or semantically match entities found in your resume, they are flagged as missing so you can add them to improve your chances.</p>
+            </div>
+            <div class="accordion-item">
+                <h3>Common Upload Errors</h3>
+                <p>If you see a "File not allowed" error, ensure your file extension is either .pdf or .docx. Password-protected PDFs or heavily image-based resumes might also fail to parse text correctly.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

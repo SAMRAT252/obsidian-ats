@@ -1,0 +1,399 @@
+/* profile.css - OBSIDIAN AI Career Intelligence Profile & Settings */
+
+.profile-workspace {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Page Header */
+.profile-header-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.profile-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--accent-lime);
+    text-transform: uppercase;
+}
+
+.profile-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.profile-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0;
+}
+
+/* Career Profile Identity Hero Card */
+.profile-hero-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: var(--shadow-obsidian);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-hero-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background: radial-gradient(circle at 100% 50%, rgba(200, 255, 61, 0.04), transparent 70%);
+    pointer-events: none;
+}
+
+.profile-hero-left {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+}
+
+.avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--bg-surface-elevated);
+    border: 2px solid var(--accent-lime);
+    box-shadow: 0 0 20px rgba(200, 255, 61, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent-lime);
+    flex-shrink: 0;
+}
+
+.profile-identity-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.profile-identity-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.profile-identity-tag {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.identity-badge {
+    background-color: var(--accent-lime-subtle);
+    border: 1px solid var(--accent-lime-border);
+    color: var(--accent-lime);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.profile-hero-quickstats {
+    display: flex;
+    gap: 2rem;
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 2rem;
+}
+
+.hero-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hero-stat-val {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--accent-lime);
+    line-height: 1.1;
+    font-feature-settings: "tnum";
+}
+
+.hero-stat-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Two-Column Grid Setup */
+.profile-grid-layout {
+    display: grid;
+    grid-template-columns: 1.6fr 1.1fr;
+    gap: 2rem;
+}
+
+/* Settings Cards */
+.settings-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-obsidian);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.settings-card:hover {
+    border-color: rgba(244, 241, 232, 0.22);
+}
+
+.card-header-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.card-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    letter-spacing: -0.01em;
+}
+
+.card-heading svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent-lime);
+}
+
+.card-subheading {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Password Input with Visibility Toggle */
+.input-with-action {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-action .form-input {
+    padding-right: 3rem;
+}
+
+.field-action-btn {
+    position: absolute;
+    right: 0.85rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-smooth);
+}
+
+.field-action-btn:hover {
+    color: var(--text-primary);
+}
+
+.field-action-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Password Strength Meter */
+.strength-meter-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.strength-bar-track {
+    display: flex;
+    height: 4px;
+    gap: 6px;
+    width: 100%;
+}
+
+.strength-segment {
+    flex: 1;
+    background-color: var(--bg-surface-elevated);
+    border-radius: 2px;
+    transition: var(--transition-smooth);
+}
+
+.strength-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.strength-tag {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Stats Summary Card (Right Column) */
+.metrics-stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.metric-pill {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: var(--transition-smooth);
+}
+
+.metric-pill:hover {
+    border-color: var(--accent-lime-border);
+    transform: translateY(-2px);
+}
+
+.metric-pill-val {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-feature-settings: "tnum";
+}
+
+.metric-pill-val.lime-glow {
+    color: var(--accent-lime);
+}
+
+.metric-pill-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* Account Timeline Details */
+.account-meta-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+}
+
+.meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.meta-row-label {
+    color: var(--text-secondary);
+}
+
+.meta-row-val {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-feature-settings: "tnum";
+}
+
+/* Form Action Footer */
+.form-submit-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.save-status-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 960px) {
+    .profile-hero-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .profile-hero-quickstats {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 1.5rem;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .profile-grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .profile-hero-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .metrics-stack {
+        grid-template-columns: 1fr;
+    }
+    .profile-title {
+        font-size: 1.75rem;
+    }
+}

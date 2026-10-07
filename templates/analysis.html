@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Analysis{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+{% endblock %}
+
+{% set active_page = 'ats_score' %}
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <main class="main-content">
+        <div class="analysis-container">
+            <div class="analysis-header">
+                <h1>Resume Analysis Report</h1>
+                <div class="quick-links">
+                    <a href="{{ url_for('ats_score', analysis_id=analysis.id) }}" class="btn btn-primary"><i class="fas fa-chart-line"></i> ATS Score</a>
+                    <a href="{{ url_for('keywords', analysis_id=analysis.id) }}" class="btn btn-secondary"><i class="fas fa-tags"></i> Keywords</a>
+                    <a href="{{ url_for('skill_gap', analysis_id=analysis.id) }}" class="btn btn-secondary"><i class="fas fa-tools"></i> Skill Gap</a>
+                    <a href="{{ url_for('suggestions', analysis_id=analysis.id) }}" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Suggestions</a>
+                </div>
+            </div>
+            <div class="parsed-resume-sections">
+                <div class="section-card">
+                    <h3><i class="fas fa-user"></i> Personal Info</h3>
+                    <p><strong>Name:</strong> {{ resume.parsed_data.name or 'N/A' }}</p>
+                    <p><strong>Email:</strong> {{ resume.parsed_data.email or 'N/A' }}</p>
+                    <p><strong>Phone:</strong> {{ resume.parsed_data.phone or 'N/A' }}</p>
+                </div>
+                <div class="section-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <ul>
+                    {% for edu in resume.parsed_data.education %}
+                        <li>{{ edu }}</li>
+                    {% else %}
+                        <li>No education found.</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div class="section-card">
+                    <h3><i class="fas fa-briefcase"></i> Experience</h3>
+                    <ul>
+                    {% for exp in resume.parsed_data.experience %}
+                        <li>{{ exp }}</li>
+                    {% else %}
+                        <li>No experience found.</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div class="section-card">
+                    <h3><i class="fas fa-cogs"></i> Skills</h3>
+                    <div class="skills-list">
+                    {% for skill in resume.parsed_data.skills %}
+                        <span class="skill-tag">{{ skill }}</span>
+                    {% else %}
+                        <span>No skills found.</span>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

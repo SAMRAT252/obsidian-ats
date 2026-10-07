@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ATS System{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+{% set active_page = 'dashboard' %}
+<div class="dashboard-layout">
+    <!-- Reusable Obsidian AI Sidebar -->
+    {% include "_sidebar.html" %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2>Welcome, {{ session.get('full_name', session.get('username')) }}</h2>
+            <div class="header-actions">
+                <a href="{{ url_for('upload_resume') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Analysis</a>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Avg ATS Score</span>
+                </div>
+                <div class="stat-value" id="stats-ats-score">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Resumes Analyzed</span>
+                </div>
+                <div class="stat-value" id="stats-resumes">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Jobs Matched</span>
+                </div>
+                <div class="stat-value" id="stats-jobs">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Average Match</span>
+                </div>
+                <div class="stat-value" id="stats-avg-match">--%</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container">
+                <h3>Score Distribution</h3>
+                <div class="chart-wrapper">
+                    <canvas id="atsDistributionChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3>Recent Scores</h3>
+                <div class="chart-wrapper">
+                    <canvas id="recentScoresChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <h3 class="mb-3">Recent Analyses</h3>
+            <div class="item-list">
+                {% if analyses %}
+                    {% for analysis in analyses %}
+                        <div class="list-item">
+                            <div class="list-item-main">
+                                <div class="list-item-title">{{ analysis.resume_name }} <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem; margin: 0 5px;"></i> {{ analysis.job_title }}</div>
+                                <div class="list-item-meta">
+                                    <span><i class="fa-regular fa-calendar"></i> {{ analysis.date }}</span>
+                                    <span class="badge {% if analysis.ats_score >= 80 %}badge-lime{% elif analysis.ats_score >= 60 %}badge-warning{% else %}badge-danger{% endif %}">
+                                        Score: {{ analysis.ats_score }}%
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="list-item-actions">
+                                <a href="{{ url_for('analysis_view', analysis_id=analysis.id) }}" class="btn btn-primary" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 700;">View Details</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center text-secondary py-4">
+                        <i class="fa-solid fa-inbox mb-2" style="font-size: 2rem;"></i>
+                        <p>No analyses found. Upload a resume to get started.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

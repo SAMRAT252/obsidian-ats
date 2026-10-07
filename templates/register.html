@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Register - ATS System{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Start optimizing your resume today</p>
+        </div>
+
+        <form action="{{ url_for('register') }}" method="POST">
+            <div class="form-group">
+                <label for="full_name" class="form-label">Full Name</label>
+                <input type="text" id="full_name" name="full_name" class="form-input" required autofocus placeholder="e.g., Jane Doe">
+            </div>
+
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-input" required placeholder="Choose a unique username">
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" id="email" name="email" class="form-input" required placeholder="jane@example.com">
+            </div>
+
+            <div class="form-group password-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-input" required placeholder="Create a strong password">
+                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+
+            <div class="form-group password-group">
+                <label for="confirm_password" class="form-label">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-input" required placeholder="Repeat your password">
+                <button type="button" class="password-toggle" onclick="togglePassword('confirm_password')">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+
+            <button type="submit" class="btn btn-primary auth-btn">Create Account</button>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="{{ url_for('login') }}">Log in</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = input.nextElementSibling.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>
+{% endblock %}
