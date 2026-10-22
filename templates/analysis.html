@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Analysis{% endblock %}
+{% block title %}Resume Analysis Report - ATS System{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
 {% endblock %}
@@ -11,58 +11,232 @@
     {% include "_sidebar.html" %}
 
     <main class="main-content">
-        <div class="analysis-container">
-            <div class="analysis-header">
-                <h1>Resume Analysis Report</h1>
+        <div class="page-header" style="flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h2>Resume Analysis Report</h2>
+                <p class="text-secondary mt-1">
+                    Candidate: <strong class="text-lime">{{ resume.parsed_data.name or resume.original_filename }}</strong> &bull; 
+                    Target Role: <strong>{{ job_description.title }}</strong> {% if job_description.company %}({{ job_description.company }}){% endif %}
+                </p>
+            </div>
+            <div class="header-actions" style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+                <button type="button" class="btn btn-primary" onclick="exportAnalysisReport()" id="exportPdfBtn" style="padding: 0.6rem 1.35rem; font-weight: 700;">
+                    <i class="fa-solid fa-file-pdf"></i> Download PDF Report
+                </button>
+            </div>
+        </div>
+
+        <div class="analysis-container" id="printableReportArea">
+            <!-- Navigation Subtabs -->
+            <div class="analysis-header" style="margin-bottom: 1.75rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="badge badge-lime" style="font-size: 0.85rem; padding: 0.35rem 0.85rem;">
+                        <i class="fa-solid fa-shield-halved"></i> Verified ATS Audit
+                    </span>
+                    <span class="text-muted" style="font-size: 0.85rem;">Generated on {{ (analysis.created_at|string)[:10] if analysis.created_at else 'Today' }}</span>
+                </div>
                 <div class="quick-links">
-                    <a href="{{ url_for('ats_score', analysis_id=analysis.id) }}" class="btn btn-primary"><i class="fas fa-chart-line"></i> ATS Score</a>
-                    <a href="{{ url_for('keywords', analysis_id=analysis.id) }}" class="btn btn-secondary"><i class="fas fa-tags"></i> Keywords</a>
-                    <a href="{{ url_for('skill_gap', analysis_id=analysis.id) }}" class="btn btn-secondary"><i class="fas fa-tools"></i> Skill Gap</a>
-                    <a href="{{ url_for('suggestions', analysis_id=analysis.id) }}" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Suggestions</a>
+                    <a href="{{ url_for('ats_score', analysis_id=analysis.id) }}" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.4rem 0.9rem;"><i class="fa-solid fa-chart-pie"></i> Score Details</a>
+                    <a href="{{ url_for('keywords', analysis_id=analysis.id) }}" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.4rem 0.9rem;"><i class="fa-solid fa-tags"></i> Keywords</a>
+                    <a href="{{ url_for('skill_gap', analysis_id=analysis.id) }}" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.4rem 0.9rem;"><i class="fa-solid fa-layer-group"></i> Skill Gap</a>
+                    <a href="{{ url_for('suggestions', analysis_id=analysis.id) }}" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.4rem 0.9rem;"><i class="fa-solid fa-wand-magic-sparkles"></i> Suggestions</a>
                 </div>
             </div>
-            <div class="parsed-resume-sections">
-                <div class="section-card">
-                    <h3><i class="fas fa-user"></i> Personal Info</h3>
-                    <p><strong>Name:</strong> {{ resume.parsed_data.name or 'N/A' }}</p>
-                    <p><strong>Email:</strong> {{ resume.parsed_data.email or 'N/A' }}</p>
-                    <p><strong>Phone:</strong> {{ resume.parsed_data.phone or 'N/A' }}</p>
-                </div>
-                <div class="section-card">
-                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
-                    <ul>
-                    {% for edu in resume.parsed_data.education %}
-                        <li>{{ edu }}</li>
-                    {% else %}
-                        <li>No education found.</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                <div class="section-card">
-                    <h3><i class="fas fa-briefcase"></i> Experience</h3>
-                    <ul>
-                    {% for exp in resume.parsed_data.experience %}
-                        <li>{{ exp }}</li>
-                    {% else %}
-                        <li>No experience found.</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                <div class="section-card">
-                    <h3><i class="fas fa-cogs"></i> Skills</h3>
-                    <div class="skills-list">
-                    {% for skill in resume.parsed_data.skills %}
-                        <span class="skill-tag">{{ skill }}</span>
-                    {% else %}
-                        <span>No skills found.</span>
-                    {% endfor %}
+
+            <!-- Executive Score Hero Card -->
+            <div class="report-hero-card">
+                <div class="report-hero-grid">
+                    <div class="score-mini-gauge">
+                        <div class="score-circle-container" style="width: 150px; height: 150px;">
+                            <svg class="score-circle" viewBox="0 0 100 100">
+                                <circle class="score-circle-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="score-circle-path" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="score-text" style="font-size: 2.25rem;">
+                                <span class="score-value" id="final-score" data-score="{{ analysis.ats_score }}">0</span>%
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge {% if analysis.ats_score >= 80 %}badge-lime{% elif analysis.ats_score >= 60 %}badge-warning{% else %}badge-danger{% endif %}" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">
+                                {% if analysis.ats_score >= 80 %}Excellent Match{% elif analysis.ats_score >= 60 %}Moderate Match{% else %}Needs Optimization{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-primary);">
+                            Executive Match Breakdown
+                        </h3>
+                        <p class="text-secondary mb-3" style="font-size: 0.92rem;">
+                            Overall compatibility analysis comparing candidate credentials against <strong>{{ job_description.title }}</strong> requirements.
+                        </p>
+                        <div class="score-metrics-grid">
+                            <div class="score-metric-tile">
+                                <span class="score-metric-label">Keyword Match</span>
+                                <span class="score-metric-val text-lime">{{ analysis.score_breakdown.keyword_match|round(1) if analysis.score_breakdown else 0 }}%</span>
+                            </div>
+                            <div class="score-metric-tile">
+                                <span class="score-metric-label">Skills Match</span>
+                                <span class="score-metric-val text-lime">{{ analysis.score_breakdown.skills_match|round(1) if analysis.score_breakdown else 0 }}%</span>
+                            </div>
+                            <div class="score-metric-tile">
+                                <span class="score-metric-label">Semantic Relevance</span>
+                                <span class="score-metric-val">{{ analysis.score_breakdown.semantic_similarity|round(1) if analysis.score_breakdown else 0 }}%</span>
+                            </div>
+                            <div class="score-metric-tile">
+                                <span class="score-metric-label">Experience Relevance</span>
+                                <span class="score-metric-val">{{ analysis.score_breakdown.experience|round(1) if analysis.score_breakdown else 0 }}%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Keywords & Skills Highlights Grid -->
+            <div class="grid mb-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                <div class="section-card">
+                    <h3 style="color: var(--accent-lime);"><i class="fa-solid fa-circle-check"></i> Matched Target Keywords ({{ analysis.matched_keywords|length }})</h3>
+                    <div class="chip-container mt-2">
+                        {% for kw in analysis.matched_keywords[:16] %}
+                            <span class="chip matched">{{ kw }}</span>
+                        {% else %}
+                            <p class="text-muted" style="font-size: 0.88rem;">No explicit keyword matches found.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="section-card" style="border-left-color: var(--status-danger);">
+                    <h3 style="color: var(--status-danger);"><i class="fa-solid fa-circle-xmark"></i> Missing Keywords to Add ({{ analysis.missing_keywords|length }})</h3>
+                    <div class="chip-container mt-2">
+                        {% for kw in analysis.missing_keywords[:16] %}
+                            <span class="chip missing">{{ kw }}</span>
+                        {% else %}
+                            <p class="text-muted" style="font-size: 0.88rem;">No major missing keywords.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parsed Candidate Dossier Sections (Clean multi-line display) -->
+            <h3 class="mb-3" style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary);"><i class="fa-solid fa-file-lines text-lime" style="margin-right: 6px;"></i> Parsed Candidate Dossier</h3>
+            
+            <div class="parsed-resume-sections">
+                <!-- Personal Info Card -->
+                <div class="section-card">
+                    <h3><i class="fa-solid fa-user text-lime"></i> Personal Information</h3>
+                    <div style="font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                        <p><strong>Candidate Name:</strong> <span id="reportCandidateName" class="text-lime" style="font-weight: 700;">{{ resume.parsed_data.name or 'Not detected' }}</span></p>
+                        <p><strong>Email:</strong> {{ resume.parsed_data.email or 'Not detected' }}</p>
+                        <p><strong>Phone:</strong> {{ resume.parsed_data.phone or 'Not detected' }}</p>
+                        {% if resume.parsed_data.linkedin and resume.parsed_data.linkedin != 'Not detected' %}
+                            <p><strong>LinkedIn:</strong> <a href="{{ resume.parsed_data.linkedin }}" target="_blank" class="text-lime">{{ resume.parsed_data.linkedin }}</a></p>
+                        {% endif %}
+                        {% if resume.parsed_data.github and resume.parsed_data.github != 'Not detected' %}
+                            <p><strong>GitHub:</strong> <a href="{{ resume.parsed_data.github }}" target="_blank" class="text-lime">{{ resume.parsed_data.github }}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Education Card -->
+                <div class="section-card">
+                    <h3><i class="fa-solid fa-graduation-cap text-lime"></i> Education & Credentials</h3>
+                    {% if resume.parsed_data.education and resume.parsed_data.education != 'Not detected' %}
+                        {% if resume.parsed_data.education is string %}
+                            {% for line in resume.parsed_data.education.split('\n') if line.strip() %}
+                                <div class="section-bullet">
+                                    <i class="fa-solid fa-check text-lime"></i>
+                                    <span>{{ line.strip() }}</span>
+                                </div>
+                            {% endfor %}
+                        {% elif resume.parsed_data.education is sequence %}
+                            {% for item in resume.parsed_data.education if item|string|length > 1 %}
+                                <div class="section-bullet">
+                                    <i class="fa-solid fa-check text-lime"></i>
+                                    <span>{{ item }}</span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        <p class="text-muted" style="font-size: 0.88rem;">No explicit education section detected in resume text.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Experience Card -->
+                <div class="section-card" style="grid-column: span 2;">
+                    <h3><i class="fa-solid fa-briefcase text-lime"></i> Professional Experience</h3>
+                    {% if resume.parsed_data.experience and resume.parsed_data.experience != 'Not detected' %}
+                        {% if resume.parsed_data.experience is string %}
+                            {% for line in resume.parsed_data.experience.split('\n') if line.strip() %}
+                                <div class="section-bullet">
+                                    <i class="fa-solid fa-caret-right text-lime"></i>
+                                    <span>{{ line.strip() }}</span>
+                                </div>
+                            {% endfor %}
+                        {% elif resume.parsed_data.experience is sequence %}
+                            {% for item in resume.parsed_data.experience if item|string|length > 1 %}
+                                <div class="section-bullet">
+                                    <i class="fa-solid fa-caret-right text-lime"></i>
+                                    <span>{{ item }}</span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        <p class="text-muted" style="font-size: 0.88rem;">No explicit experience section detected in resume text.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Skills Card -->
+                <div class="section-card" style="grid-column: span 2;">
+                    <h3><i class="fa-solid fa-microchip text-lime"></i> Detected Skills & Technical Stack</h3>
+                    <div class="skills-list mt-2">
+                        {% if resume.parsed_data.skills and resume.parsed_data.skills != 'Not detected' %}
+                            {% if resume.parsed_data.skills is string %}
+                                {% for s in resume.parsed_data.skills.split('\n') if s.strip() %}
+                                    <span class="skill-tag" style="background-color: var(--accent-lime-subtle); color: var(--accent-lime); border-color: var(--accent-lime-border);">
+                                        {{ s.strip() }}
+                                    </span>
+                                {% endfor %}
+                            {% elif resume.parsed_data.skills is sequence %}
+                                {% for s in resume.parsed_data.skills if s|string|length > 1 %}
+                                    <span class="skill-tag" style="background-color: var(--accent-lime-subtle); color: var(--accent-lime); border-color: var(--accent-lime-border);">
+                                        {{ s }}
+                                    </span>
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            <span class="text-muted" style="font-size: 0.88rem;">No technical skills detected.</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top AI Improvement Recommendations -->
+            {% if analysis.recommendations %}
+            <div class="mt-4">
+                <h3 class="mb-3" style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary);">
+                    <i class="fa-solid fa-wand-magic-sparkles text-lime" style="margin-right: 6px;"></i> Actionable ATS Optimization Recommendations
+                </h3>
+                <div class="suggestion-list" style="margin-top: 0.75rem;">
+                    {% for suggestion in analysis.recommendations[:4] %}
+                        <div class="suggestion-card {{ suggestion.category }}">
+                            <div class="suggestion-icon">
+                                {% if suggestion.category == 'critical' %}<i class="fa-solid fa-triangle-exclamation text-danger"></i>
+                                {% elif suggestion.category == 'important' %}<i class="fa-solid fa-circle-info text-warning"></i>
+                                {% else %}<i class="fa-solid fa-lightbulb text-lime"></i>{% endif %}
+                            </div>
+                            <div class="suggestion-content">
+                                <h4>{{ suggestion.title }}</h4>
+                                <p>{{ suggestion.description }}</p>
+                                <small>Section: {{ suggestion.section }}</small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </main>
 </div>
 {% endblock %}
+
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
 {% endblock %}

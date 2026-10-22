@@ -100,9 +100,24 @@ def parse_resume(text):
     if githubs:
         parsed['github'] = githubs[0]
         
-    # Extract name (very basic assumption: first non-empty line)
+    # Extract name (smart heuristic: first non-header, non-contact line)
     lines = [line.strip() for line in text.split('\n') if line.strip()]
-    if lines:
+    for line in lines[:12]:
+        cleaned_line = line.strip()
+        if not cleaned_line:
+            continue
+        if '@' in cleaned_line or '.com' in cleaned_line or 'http' in cleaned_line or 'www.' in cleaned_line:
+            continue
+        if re.search(r'\d{3}[-.\s]?\d{3}', cleaned_line) or re.search(r'\(\d{3}\)', cleaned_line):
+            continue
+        if any(kw in cleaned_line.upper() for kw in ['RESUME', 'CURRICULUM', 'VITAE', 'CONTACT', 'ABOUT', 'EXPERIENCE', 'EDUCATION', 'SKILLS', 'PROFILE']):
+            continue
+        words = cleaned_line.split()
+        if 1 <= len(words) <= 4 and len(cleaned_line) <= 35:
+            parsed['name'] = cleaned_line
+            break
+            
+    if parsed['name'] == 'Not detected' and lines:
         parsed['name'] = lines[0]
         
     # Section extraction patterns (both standard words and compact representations)
@@ -154,5 +169,14 @@ def parse_resume(text):
     for sec_name, content in section_content.items():
         if content:
             parsed[sec_name] = '\n'.join(content)
+            
+    # Auto-extract recognized skills as a list
+    try:
+        from services.skill_extractor import extract_skills
+        extracted = extract_skills(text)
+        if extracted.get('all'):
+            parsed['skills'] = extracted.get('all')
+    except Exception as e:
+        print(f"Skill auto-extraction warning: {e}")
             
     return parsed

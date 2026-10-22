@@ -118,3 +118,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+// Global PDF Export Function
+window.exportAnalysisReport = function() {
+    const btn = document.getElementById('exportPdfBtn');
+    const originalText = btn ? btn.innerHTML : '';
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating PDF...';
+    }
+
+    const reportElement = document.getElementById('printableReportArea') || document.querySelector('.analysis-container');
+    
+    if (typeof html2pdf !== 'undefined' && reportElement) {
+        const nameEl = document.getElementById('reportCandidateName');
+        const candidateName = (nameEl ? nameEl.textContent.trim() : 'Resume').replace(/[^a-zA-Z0-9_-]/g, '_');
+        const opt = {
+            margin: [8, 8, 8, 8],
+            filename: `ATS_Report_${candidateName}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, logging: false },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(reportElement).save().then(() => {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }).catch(err => {
+            console.error('html2pdf fallback to print:', err);
+            window.print();
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+    } else {
+        window.print();
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+};

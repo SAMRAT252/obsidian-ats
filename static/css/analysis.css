@@ -351,3 +351,133 @@
 .compare-card strong {
     color: var(--text-primary);
 }
+
+/* ========================================================
+   EXECUTIVE REPORT & PDF EXPORT STYLES
+   ======================================================== */
+.report-hero-card {
+    background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--bg-surface) 100%);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-obsidian);
+}
+
+.report-hero-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .report-hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+
+.score-mini-gauge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+}
+
+.score-metric-tile {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.score-metric-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.score-metric-val {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.section-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.section-bullet i {
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Print Styles for PDF Export */
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #111111 !important;
+    }
+    
+    .navbar, 
+    .sidebar, 
+    .header-actions, 
+    .quick-links,
+    #exportPdfBtn,
+    .btn {
+        display: none !important;
+    }
+    
+    .dashboard-layout {
+        display: block !important;
+        min-height: auto !important;
+    }
+    
+    .main-content {
+        padding: 0 !important;
+        background-color: transparent !important;
+    }
+    
+    .analysis-container,
+    .section-card,
+    .report-hero-card,
+    .score-metric-tile {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+    }
+    
+    h1, h2, h3, h4, strong {
+        color: #0f172a !important;
+    }
+    
+    p, span, li {
+        color: #334155 !important;
+    }
+    
+    .score-circle-path {
+        stroke: #16a34a !important;
+    }
+}
