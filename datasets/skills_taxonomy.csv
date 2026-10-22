@@ -1,0 +1,78 @@
+Category,Skill_Name,Skill_Type,Importance_Weight
+Programming Languages,Python,Technical,0.95
+Programming Languages,Java,Technical,0.9
+Programming Languages,JavaScript,Technical,0.95
+Programming Languages,TypeScript,Technical,0.9
+Programming Languages,C++,Technical,0.85
+Programming Languages,C#,Technical,0.85
+Programming Languages,Go,Technical,0.85
+Programming Languages,Rust,Technical,0.8
+Programming Languages,SQL,Technical,0.95
+Programming Languages,PHP,Technical,0.75
+Programming Languages,Ruby,Technical,0.75
+Programming Languages,Swift,Technical,0.8
+Programming Languages,Kotlin,Technical,0.8
+Programming Languages,R,Technical,0.8
+Programming Languages,Bash,Technical,0.85
+Web Technologies,React,Technical,0.95
+Web Technologies,Node.js,Technical,0.9
+Web Technologies,Next.js,Technical,0.85
+Web Technologies,Express,Technical,0.85
+Web Technologies,Django,Technical,0.85
+Web Technologies,Flask,Technical,0.8
+Web Technologies,FastAPI,Technical,0.85
+Web Technologies,Spring Boot,Technical,0.85
+Web Technologies,Angular,Technical,0.8
+Web Technologies,Vue.js,Technical,0.8
+Web Technologies,HTML5,Technical,0.9
+Web Technologies,CSS3,Technical,0.9
+Web Technologies,Tailwind CSS,Technical,0.85
+Web Technologies,REST API,Technical,0.95
+Web Technologies,GraphQL,Technical,0.85
+Data Science & ML,Machine Learning,Technical,0.95
+Data Science & ML,Deep Learning,Technical,0.9
+Data Science & ML,TensorFlow,Technical,0.85
+Data Science & ML,PyTorch,Technical,0.9
+Data Science & ML,Scikit-learn,Technical,0.9
+Data Science & ML,Pandas,Technical,0.9
+Data Science & ML,NumPy,Technical,0.9
+Data Science & ML,NLP,Technical,0.9
+Data Science & ML,Large Language Models (LLM),Technical,0.95
+Data Science & ML,Computer Vision,Technical,0.85
+Data Science & ML,Data Visualization,Technical,0.85
+Data Science & ML,Tableau,Technical,0.8
+Data Science & ML,Power BI,Technical,0.8
+Data Science & ML,Statistics,Technical,0.85
+Data Science & ML,Feature Engineering,Technical,0.85
+Cloud & DevOps,AWS,Technical,0.95
+Cloud & DevOps,Azure,Technical,0.85
+Cloud & DevOps,Google Cloud Platform (GCP),Technical,0.85
+Cloud & DevOps,Docker,Technical,0.9
+Cloud & DevOps,Kubernetes,Technical,0.9
+Cloud & DevOps,CI/CD Pipelines,Technical,0.9
+Cloud & DevOps,Terraform,Technical,0.85
+Cloud & DevOps,Git,Technical,0.95
+Cloud & DevOps,GitHub Actions,Technical,0.85
+Cloud & DevOps,Linux Administration,Technical,0.85
+Databases,PostgreSQL,Technical,0.9
+Databases,MySQL,Technical,0.9
+Databases,MongoDB,Technical,0.85
+Databases,Redis,Technical,0.85
+Databases,Elasticsearch,Technical,0.8
+Databases,SQLite,Technical,0.8
+UI/UX & Design,Figma,Technical,0.95
+UI/UX & Design,Adobe Photoshop,Technical,0.9
+UI/UX & Design,Adobe Illustrator,Technical,0.9
+UI/UX & Design,Adobe InDesign,Technical,0.85
+UI/UX & Design,Typography,Technical,0.8
+UI/UX & Design,Branding & Identity,Technical,0.85
+UI/UX & Design,Wireframing & Prototyping,Technical,0.9
+UI/UX & Design,User Research,Technical,0.85
+Soft Skills,Problem Solving,Soft,0.95
+Soft Skills,Communication,Soft,0.95
+Soft Skills,Team Collaboration,Soft,0.9
+Soft Skills,Agile / Scrum,Soft,0.9
+Soft Skills,Critical Thinking,Soft,0.9
+Soft Skills,Leadership,Soft,0.85
+Soft Skills,Time Management,Soft,0.85
+Soft Skills,Adaptability,Soft,0.85

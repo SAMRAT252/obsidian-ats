@@ -1,0 +1,464 @@
+[
+  {
+    "category": "Programming Languages",
+    "skill_name": "Python",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "Java",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "JavaScript",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "TypeScript",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "C++",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "C#",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "Go",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "Rust",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "SQL",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "PHP",
+    "type": "Technical",
+    "weight": 0.75
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "Ruby",
+    "type": "Technical",
+    "weight": 0.75
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "Swift",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "Kotlin",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "R",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Programming Languages",
+    "skill_name": "Bash",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "React",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Node.js",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Next.js",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Express",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Django",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Flask",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "FastAPI",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Spring Boot",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Angular",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Vue.js",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "HTML5",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "CSS3",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "Tailwind CSS",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "REST API",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Web Technologies",
+    "skill_name": "GraphQL",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Machine Learning",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Deep Learning",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "TensorFlow",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "PyTorch",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Scikit-learn",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Pandas",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "NumPy",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "NLP",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Large Language Models (LLM)",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Computer Vision",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Data Visualization",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Tableau",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Power BI",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Statistics",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Data Science & ML",
+    "skill_name": "Feature Engineering",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "AWS",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "Azure",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "Google Cloud Platform (GCP)",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "Docker",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "Kubernetes",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "CI/CD Pipelines",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "Terraform",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "Git",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "GitHub Actions",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skill_name": "Linux Administration",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Databases",
+    "skill_name": "PostgreSQL",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Databases",
+    "skill_name": "MySQL",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "Databases",
+    "skill_name": "MongoDB",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Databases",
+    "skill_name": "Redis",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Databases",
+    "skill_name": "Elasticsearch",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "Databases",
+    "skill_name": "SQLite",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "Figma",
+    "type": "Technical",
+    "weight": 0.95
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "Adobe Photoshop",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "Adobe Illustrator",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "Adobe InDesign",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "Typography",
+    "type": "Technical",
+    "weight": 0.8
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "Branding & Identity",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "Wireframing & Prototyping",
+    "type": "Technical",
+    "weight": 0.9
+  },
+  {
+    "category": "UI/UX & Design",
+    "skill_name": "User Research",
+    "type": "Technical",
+    "weight": 0.85
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Problem Solving",
+    "type": "Soft",
+    "weight": 0.95
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Communication",
+    "type": "Soft",
+    "weight": 0.95
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Team Collaboration",
+    "type": "Soft",
+    "weight": 0.9
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Agile / Scrum",
+    "type": "Soft",
+    "weight": 0.9
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Critical Thinking",
+    "type": "Soft",
+    "weight": 0.9
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Leadership",
+    "type": "Soft",
+    "weight": 0.85
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Time Management",
+    "type": "Soft",
+    "weight": 0.85
+  },
+  {
+    "category": "Soft Skills",
+    "skill_name": "Adaptability",
+    "type": "Soft",
+    "weight": 0.85
+  }
+]
